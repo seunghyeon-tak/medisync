@@ -1,4 +1,4 @@
-package spring_boot_starter_kit;
+package medisync;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

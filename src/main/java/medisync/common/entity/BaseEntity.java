@@ -1,4 +1,4 @@
-package spring_boot_starter_kit.common.entity;
+package medisync.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

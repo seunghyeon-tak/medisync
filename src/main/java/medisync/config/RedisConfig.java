@@ -1,4 +1,4 @@
-package spring_boot_starter_kit.config;
+package medisync.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

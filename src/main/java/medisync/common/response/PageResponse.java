@@ -1,4 +1,4 @@
-package spring_boot_starter_kit.common.response;
+package medisync.common.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

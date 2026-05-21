@@ -1,4 +1,4 @@
-package spring_boot_starter_kit.common.jwt;
+package medisync.common.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

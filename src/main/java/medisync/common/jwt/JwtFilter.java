@@ -1,4 +1,4 @@
-package spring_boot_starter_kit.common.jwt;
+package medisync.common.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

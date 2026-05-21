@@ -1,4 +1,4 @@
-package spring_boot_starter_kit.config;
+package medisync.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

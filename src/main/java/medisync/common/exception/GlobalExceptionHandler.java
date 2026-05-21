@@ -1,10 +1,10 @@
-package spring_boot_starter_kit.common.exception;
+package medisync.common.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import spring_boot_starter_kit.common.response.ApiResponse;
-import spring_boot_starter_kit.common.response.ErrorCode;
+import medisync.common.response.ApiResponse;
+import medisync.common.response.ErrorCode;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

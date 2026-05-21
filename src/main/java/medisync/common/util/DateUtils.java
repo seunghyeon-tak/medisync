@@ -1,4 +1,4 @@
-package spring_boot_starter_kit.common.util;
+package medisync.common.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -1,4 +1,4 @@
-package spring_boot_starter_kit.common.util;
+package medisync.common.util;
 
 public final class StringUtils {
     private StringUtils() {}
