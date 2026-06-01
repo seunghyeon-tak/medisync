@@ -1,6 +1,5 @@
 ## 프로젝트 소개
-Spring Boot 기반 프로젝트를 빠르게 시작할 수 있는 스타터 킷입니다.
-누구든 클론 후 `domain/` 아래에 비즈니스 로직만 추가하면 바로 개발을 시작할 수 있습니다.
+Medisync
 
 ## 기술 스택
 - Java 17
@@ -91,6 +90,3 @@ class UserServiceTest extends BaseServiceTest { }
 main    → 안정화된 버전
 develop → 개발 버전
 ```
-
-## 라이선스
-MIT License

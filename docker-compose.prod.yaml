@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    platform: linux/arm64
+    container_name: medisync-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - JWT_SECRET=${JWT_SECRET}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - db
