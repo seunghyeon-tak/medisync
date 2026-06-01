@@ -3,12 +3,12 @@ spring:
     active: local
 
   application:
-    name: spring-boot-starter-kit
+    name: medisync
 
   data:
     redis:
-      host: ${REDIS_HOST:-localhost}
-      port: ${REDIS_PORT:-6379}
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
 jwt:
   secret: ${JWT_SECRET}
