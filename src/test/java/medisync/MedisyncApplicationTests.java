@@ -6,7 +6,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class SpringBootStarterKitApplicationTests {
+class MedisyncApplicationTests {
 
 	@Test
 	void contextLoads() {
