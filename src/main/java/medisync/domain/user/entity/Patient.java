@@ -18,7 +18,7 @@ public class Patient extends User {
      * 혈액형 (Rh+ A, Rh+ B, Rh+ AB, Rh+ O)
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "blood_type", nullable = false)
+    @Column(name = "blood_type", length = 10, nullable = false)
     private BloodType bloodType;
 
     /**

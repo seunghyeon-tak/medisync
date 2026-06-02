@@ -44,7 +44,7 @@ public class Appointment extends BaseEntity {
     private String picture;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "reservation_status")
+    @Column(name = "reservation_status", length = 20)
     @Builder.Default
     private ReservationStatus reservationStatus = ReservationStatus.WAITING;
 }

@@ -2,6 +2,7 @@ package medisync.domain.hospital.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -39,5 +40,6 @@ public class AppointmentSlot extends BaseEntity {
     private LocalTime endTime;
 
     @Column(name = "is_available", nullable = false)
+    @Builder.Default
     private boolean isAvailable = true;
 }

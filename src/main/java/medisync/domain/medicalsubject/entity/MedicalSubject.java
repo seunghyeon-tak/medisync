@@ -11,7 +11,7 @@ import medisync.common.entity.BaseEntity;
  * 전공 엔티티
  * */
 @Entity
-@Table(name = "medicalsubjects")
+@Table(name = "medical_subjects")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
