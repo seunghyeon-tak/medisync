@@ -1,6 +1,7 @@
 package medisync.domain.user.mapper;
 
 import medisync.domain.hospital.entity.Hospital;
+import medisync.domain.pharmacy.entity.Pharmacy;
 import medisync.domain.user.dto.DoctorSignupRequest;
 import medisync.domain.user.dto.PatientSignupRequest;
 import medisync.domain.user.dto.PharmacistSignupRequest;
@@ -42,7 +43,7 @@ public class UserMapper {
                 .build();
     }
 
-    public Pharmacist pharmacistMapper(PharmacistSignupRequest request, String encodedPassword) {
+    public Pharmacist pharmacistMapper(PharmacistSignupRequest request, String encodedPassword, Pharmacy pharmacy) {
         return Pharmacist.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -51,6 +52,7 @@ public class UserMapper {
                 .address(request.getAddress())
                 .role(Role.PHARMACIST)
                 .phone(request.getPhone())
+                .pharmacy(pharmacy)
                 .licenseNumber(request.getLicenseNumber())
                 .build();
     }

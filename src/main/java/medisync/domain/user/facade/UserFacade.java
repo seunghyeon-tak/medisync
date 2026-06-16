@@ -3,6 +3,8 @@ package medisync.domain.user.facade;
 import lombok.RequiredArgsConstructor;
 import medisync.domain.hospital.entity.Hospital;
 import medisync.domain.hospital.service.HospitalService;
+import medisync.domain.pharmacy.entity.Pharmacy;
+import medisync.domain.pharmacy.service.PharmacyService;
 import medisync.domain.user.dto.DoctorSignupRequest;
 import medisync.domain.user.dto.PatientSignupRequest;
 import medisync.domain.user.dto.PharmacistSignupRequest;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserFacade {
     private final UserService userService;
     private final HospitalService hospitalService;
+    private final PharmacyService pharmacyService;
 
     private void validatePassword(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm)) {
@@ -42,7 +45,8 @@ public class UserFacade {
     @Transactional
     public void pharmacistSignup(PharmacistSignupRequest request) {
         userService.validateDuplicateEmail(request.getEmail());
+        Pharmacy pharmacy = pharmacyService.getPharmacy(request.getPharmacyId());
         validatePassword(request.getPassword(), request.getPasswordConfirm());
-        userService.savePharmacist(request);
+        userService.savePharmacist(request, pharmacy);
     }
 }

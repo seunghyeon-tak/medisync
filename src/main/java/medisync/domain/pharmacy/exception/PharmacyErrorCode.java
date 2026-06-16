@@ -1,4 +1,4 @@
-package medisync.domain.hospital.exception;
+package medisync.domain.pharmacy.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum HospitalErrorCode implements ErrorCode {
-    HOSPITAL_NOT_FOUND(HttpStatus.NOT_FOUND, "H001", "해당하는 병원을 찾을 수 없습니다."),
+public enum PharmacyErrorCode implements ErrorCode {
+    PHARMACY_NOT_FOUND(HttpStatus.NOT_FOUND, "P001", "해당하는 약국을 찾을 수 없습니다."),
     ;
 
     private final HttpStatus status;

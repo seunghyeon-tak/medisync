@@ -1,12 +1,11 @@
 package medisync.domain.user.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import medisync.domain.pharmacy.entity.Pharmacy;
 
 @Entity
 @Table(name = "pharmacists")
@@ -15,6 +14,10 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 public class Pharmacist extends User {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pharmacy_id", nullable = false)
+    private Pharmacy pharmacy;
+
     @Column(name = "license_number", length = 50, nullable = false)
     private String licenseNumber;
 }

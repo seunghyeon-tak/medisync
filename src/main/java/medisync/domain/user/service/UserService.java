@@ -2,6 +2,7 @@ package medisync.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import medisync.domain.hospital.entity.Hospital;
+import medisync.domain.pharmacy.entity.Pharmacy;
 import medisync.domain.user.dto.DoctorSignupRequest;
 import medisync.domain.user.dto.PatientSignupRequest;
 import medisync.domain.user.dto.PharmacistSignupRequest;
@@ -54,9 +55,9 @@ public class UserService {
     }
 
     @Transactional
-    public void savePharmacist(PharmacistSignupRequest request) {
+    public void savePharmacist(PharmacistSignupRequest request, Pharmacy pharmacy) {
         String encodedPassword = encodedPassword(request.getPassword());
-        Pharmacist pharmacist = userMapper.pharmacistMapper(request, encodedPassword);
+        Pharmacist pharmacist = userMapper.pharmacistMapper(request, encodedPassword, pharmacy);
 
         pharmacistRepository.save(pharmacist);
     }
