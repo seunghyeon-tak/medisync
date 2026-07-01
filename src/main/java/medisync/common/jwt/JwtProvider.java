@@ -37,8 +37,9 @@ public class JwtProvider {  // 토큰 생성, 검증
     }
 
     // refresh 토큰 생성
-    public String generateRefreshToken() {
+    public String generateRefreshToken(String subject) {
         return Jwts.builder()
+                .subject(subject)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .signWith(getSigningKey())
@@ -69,5 +70,15 @@ public class JwtProvider {  // 토큰 생성, 검증
                 .getSubject();
 
         return new UsernamePasswordAuthenticationToken(subject, null, Collections.emptyList());
+    }
+
+    // 토큰에서 subject만 추출
+    public String getSubject(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
     }
 }

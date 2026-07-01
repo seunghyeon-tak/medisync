@@ -9,6 +9,7 @@ import medisync.domain.user.dto.PharmacistSignupRequest;
 import medisync.domain.user.entity.Doctor;
 import medisync.domain.user.entity.Patient;
 import medisync.domain.user.entity.Pharmacist;
+import medisync.domain.user.entity.User;
 import medisync.domain.user.exception.UserErrorCode;
 import medisync.domain.user.exception.UserException;
 import medisync.domain.user.mapper.UserMapper;
@@ -30,6 +31,11 @@ public class UserService {
 
     private String encodedPassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public User getUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
     }
 
     public void validateDuplicateEmail(String email) {
