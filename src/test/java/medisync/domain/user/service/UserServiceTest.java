@@ -48,6 +48,11 @@ public class UserServiceTest extends BaseServiceTest {
     @InjectMocks
     private UserService userService;
 
+    private static final String TEST_PASSWORD = "testPassword1!";
+    private static final String TEST_EMAIL_PATIENT = "pa_tester1@test.com";
+    private static final String TEST_EMAIL_DOCTOR = "do_tester1@test.com";
+    private static final String TEST_EMAIL_PHARMACIST = "ph_tester1@test.com";
+
     @Test
     void 이메일_중복시_예외발생() {
         // given
@@ -75,9 +80,9 @@ public class UserServiceTest extends BaseServiceTest {
         // given
         PatientSignupRequest request = PatientSignupRequest.builder()
                 .name("환자테스터1")
-                .email("pa_tester1@test.com")
-                .password("123123@@@@")
-                .passwordConfirm("123123@@@@")
+                .email(TEST_EMAIL_PATIENT)
+                .password(TEST_PASSWORD)
+                .passwordConfirm(TEST_PASSWORD)
                 .birthDay(LocalDate.parse("1990-01-01"))
                 .address("서울시 강남구 111")
                 .role(Role.PATIENT)
@@ -89,7 +94,7 @@ public class UserServiceTest extends BaseServiceTest {
 
         Patient patient = Patient.builder()
                 .name("환자테스터1")
-                .email("pa_tester1@test.com")
+                .email(TEST_EMAIL_PATIENT)
                 .build();
 
         when(userMapper.patientMapper(any(), any())).thenReturn(patient);
@@ -112,9 +117,9 @@ public class UserServiceTest extends BaseServiceTest {
 
         DoctorSignupRequest request = DoctorSignupRequest.builder()
                 .name("의사테스터1")
-                .email("do_tester1@test.com")
-                .password("123123@@@@")
-                .passwordConfirm("123123@@@@")
+                .email(TEST_EMAIL_DOCTOR)
+                .password(TEST_PASSWORD)
+                .passwordConfirm(TEST_PASSWORD)
                 .birthDay(LocalDate.parse("1989-01-01"))
                 .address("서울시 강남구 112")
                 .role(Role.DOCTOR)
@@ -148,9 +153,9 @@ public class UserServiceTest extends BaseServiceTest {
 
         PharmacistSignupRequest request = PharmacistSignupRequest.builder()
                 .name("약사테스터1")
-                .email("ph_tester1@test.com")
-                .password("882817ak")
-                .passwordConfirm("882817ak")
+                .email(TEST_EMAIL_PHARMACIST)
+                .password(TEST_PASSWORD)
+                .passwordConfirm(TEST_PASSWORD)
                 .birthDay(LocalDate.parse("1989-01-01"))
                 .address("서울시 서초구 423")
                 .role(Role.PHARMACIST)
