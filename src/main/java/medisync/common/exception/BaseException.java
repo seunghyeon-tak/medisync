@@ -5,10 +5,11 @@ import medisync.common.response.ErrorCode;
 
 @Getter
 public class BaseException extends RuntimeException {
-    private ErrorCode errorCode;
+    private final ErrorCode errorCode;
 
     public BaseException(ErrorCode errorCode) {
         super(errorCode.getMessage());
+        this.errorCode = errorCode;
     }
 
 }
