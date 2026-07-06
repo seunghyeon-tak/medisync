@@ -75,4 +75,20 @@ public class AuthService {
 
         return Long.valueOf(userId);
     }
+
+    public void addBlacklist(String token) {
+        String userId = jwtProvider.getSubject(token);
+        long remainingExpiration = jwtProvider.getRemainingExpiration(token);
+
+        // 블랙리스트 추가
+        redisTemplate.opsForValue().set(
+                "blacklist:" + token,
+                "logout",
+                remainingExpiration,
+                TimeUnit.MILLISECONDS
+        );
+
+        // refresh token 삭제
+        redisTemplate.delete("refresh:" + userId);
+    }
 }

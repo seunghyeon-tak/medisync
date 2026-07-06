@@ -25,6 +25,11 @@ public class AuthFacade {
         return authService.generateTokens(user);
     }
 
+    public void logout(String accessToken) {
+        // accessToken & refreshToken redis에서 제거 및 블랙리스트 추가
+        authService.addBlacklist(accessToken);
+    }
+
     public LoginResponse reissueToken(String refreshToken) {
         // 일치 여부 확인
         Long userId = authService.validateRefreshToken(refreshToken);

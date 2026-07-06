@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthFacade authFacade;
 
+    private String extractToken(String token) {
+        // Bearer 제거
+        return token.substring(7);
+    }
+
     @PostMapping("/login")
     public ApiResponse<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         LoginResponse response = authFacade.login(request);
@@ -21,11 +26,16 @@ public class AuthController {
         return ApiResponse.ok(response);
     }
 
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(@RequestHeader("Authorization") String accessToken) {
+        authFacade.logout(extractToken(accessToken));
+
+        return ApiResponse.ok();
+    }
+
     @PostMapping("/reissue")
     public ApiResponse<LoginResponse> reissueToken(@RequestHeader("Authorization") String refreshToken) {
-        // Bearer 제거
-        String token = refreshToken.substring(7);
-        LoginResponse response = authFacade.reissueToken(token);
+        LoginResponse response = authFacade.reissueToken(extractToken(refreshToken));
 
         return ApiResponse.ok(response);
     }
