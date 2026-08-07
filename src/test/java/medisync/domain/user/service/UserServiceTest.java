@@ -9,8 +9,10 @@ import medisync.domain.user.dto.PharmacistSignupRequest;
 import medisync.domain.user.entity.Doctor;
 import medisync.domain.user.entity.Patient;
 import medisync.domain.user.entity.Pharmacist;
+import medisync.domain.user.entity.User;
 import medisync.domain.user.entity.enums.BloodType;
 import medisync.domain.user.entity.enums.Role;
+import medisync.domain.user.exception.UserErrorCode;
 import medisync.domain.user.exception.UserException;
 import medisync.domain.user.mapper.UserMapper;
 import medisync.domain.user.repository.DoctorRepository;
@@ -20,11 +22,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -176,5 +179,35 @@ public class UserServiceTest extends BaseServiceTest {
 
         // then
         verify(pharmacistRepository).save(any(Pharmacist.class));
+    }
+
+    @Test
+    void 유저_존재() {
+        // given
+        Long userId = 1L;
+        User user = User.builder().build();
+        ReflectionTestUtils.setField(user, "id", userId);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        // when
+        User result = userService.getUser(userId);
+
+        // then
+        assertEquals(user, result);
+        assertEquals(userId, result.getId());
+    }
+
+    @Test
+    void 유저_없음() {
+        // given
+        Long userId = 3L;
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // when
+        UserException exception = assertThrows(
+                UserException.class, () -> userService.getUser(userId));
+
+        // then
+        assertEquals(UserErrorCode.USER_NOT_FOUND, exception.getUserErrorCode());
     }
 }
