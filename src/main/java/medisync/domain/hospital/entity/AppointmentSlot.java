@@ -42,4 +42,8 @@ public class AppointmentSlot extends BaseEntity {
     @Column(name = "is_available", nullable = false)
     @Builder.Default
     private boolean isAvailable = true;
+
+    public void markAsBooked() {
+        this.isAvailable = false;
+    }
 }
