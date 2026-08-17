@@ -47,4 +47,14 @@ public class Appointment extends BaseEntity {
     @Column(name = "reservation_status", length = 20)
     @Builder.Default
     private ReservationStatus reservationStatus = ReservationStatus.WAITING;
+
+    public static Appointment create(Patient patient, AppointmentSlot slot, String symptom, String picture) {
+        return Appointment.builder()
+                .doctor(slot.getDoctor())
+                .patient(patient)
+                .appointmentSlot(slot)
+                .symptom(symptom)
+                .picture(picture)
+                .build();
+    }
 }
