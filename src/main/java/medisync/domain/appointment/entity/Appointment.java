@@ -64,4 +64,8 @@ public class Appointment extends BaseEntity {
                 .callType(callType)
                 .build();
     }
+
+    public void reservationStatusComplete() {
+        this.reservationStatus = ReservationStatus.COMPLETE;
+    }
 }
