@@ -5,6 +5,7 @@ import com.jayway.jsonpath.JsonPath;
 import common.BaseControllerTest;
 import medisync.domain.appointment.dto.AppointmentCreateRequest;
 import medisync.domain.appointment.entity.Appointment;
+import medisync.domain.appointment.entity.enums.CallType;
 import medisync.domain.appointment.repository.AppointmentRepository;
 import medisync.domain.hospital.entity.AppointmentSlot;
 import medisync.domain.hospital.entity.Hospital;
@@ -111,7 +112,7 @@ public class AppointmentControllerTest extends BaseControllerTest {
         appointmentSlot.markAsBooked();
 
         // 진료 예약 생성
-        Appointment appointment = Appointment.create(patient, appointmentSlot, "", "");
+        Appointment appointment = Appointment.create(patient, appointmentSlot, "", "", CallType.VOICE);
 
         return appointmentRepository.save(appointment);
     }
@@ -141,6 +142,7 @@ public class AppointmentControllerTest extends BaseControllerTest {
 
         AppointmentCreateRequest request = AppointmentCreateRequest.builder()
                 .slotId(slot.getId())
+                .callType(CallType.VOICE)
                 .build();
 
         // when
@@ -164,6 +166,7 @@ public class AppointmentControllerTest extends BaseControllerTest {
 
         AppointmentCreateRequest request = AppointmentCreateRequest.builder()
                 .slotId(99999L)
+                .callType(CallType.VOICE)
                 .build();
 
         // when
@@ -188,6 +191,7 @@ public class AppointmentControllerTest extends BaseControllerTest {
 
         AppointmentCreateRequest request = AppointmentCreateRequest.builder()
                 .slotId(appointment.getAppointmentSlot().getId())
+                .callType(CallType.VOICE)
                 .build();
 
         // when
@@ -210,6 +214,7 @@ public class AppointmentControllerTest extends BaseControllerTest {
 
         AppointmentCreateRequest request = AppointmentCreateRequest.builder()
                 .slotId(9999L)
+                .callType(CallType.VOICE)
                 .build();
 
         // when

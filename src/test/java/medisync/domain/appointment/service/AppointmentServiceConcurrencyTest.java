@@ -1,5 +1,6 @@
 package medisync.domain.appointment.service;
 
+import medisync.domain.appointment.entity.enums.CallType;
 import medisync.domain.appointment.repository.AppointmentRepository;
 import medisync.domain.hospital.entity.AppointmentSlot;
 import medisync.domain.hospital.entity.Hospital;
@@ -134,7 +135,7 @@ public class AppointmentServiceConcurrencyTest {
 
         executorService.submit(() -> {
             try {
-                appointmentService.createAppointment(appointmentSlot.getId(), patient1.getId(), "", "");
+                appointmentService.createAppointment(appointmentSlot.getId(), patient1.getId(), "", "", CallType.VOICE);
                 successCount.incrementAndGet();
             } catch (HospitalException e) {
                 failCount.incrementAndGet();
@@ -145,7 +146,7 @@ public class AppointmentServiceConcurrencyTest {
 
         executorService.submit(() -> {
             try {
-                appointmentService.createAppointment(appointmentSlot.getId(), patient2.getId(), "", "");
+                appointmentService.createAppointment(appointmentSlot.getId(), patient2.getId(), "", "", CallType.VOICE);
                 successCount.incrementAndGet();
             } catch (HospitalException e) {
                 failCount.incrementAndGet();

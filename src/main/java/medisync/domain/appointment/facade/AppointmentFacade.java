@@ -12,6 +12,8 @@ public class AppointmentFacade {
     private final AppointmentService appointmentService;
 
     public AppointmentCreateResponse createAppointment(Long patientId, AppointmentCreateRequest request) {
-        return appointmentService.createAppointment(request.getSlotId(), patientId, request.getSymptom(), request.getPicture());
+        return appointmentService.createAppointment(
+                request.getSlotId(), patientId, request.getSymptom(), request.getPicture(), request.getCallType()
+        );
     }
 }
