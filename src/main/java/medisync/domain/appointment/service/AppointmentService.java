@@ -3,6 +3,7 @@ package medisync.domain.appointment.service;
 import lombok.RequiredArgsConstructor;
 import medisync.domain.appointment.dto.AppointmentCreateResponse;
 import medisync.domain.appointment.entity.Appointment;
+import medisync.domain.appointment.entity.enums.CallType;
 import medisync.domain.appointment.repository.AppointmentRepository;
 import medisync.domain.hospital.entity.AppointmentSlot;
 import medisync.domain.hospital.exception.HospitalErrorCode;
@@ -23,7 +24,7 @@ public class AppointmentService {
     private final PatientRepository patientRepository;
 
     @Transactional
-    public AppointmentCreateResponse createAppointment(Long slotId, Long patientId, String symptom, String picture) {
+    public AppointmentCreateResponse createAppointment(Long slotId, Long patientId, String symptom, String picture, CallType callType) {
         AppointmentSlot slot = appointmentSlotRepository.findByIdForUpdate(slotId)
                 .orElseThrow(() -> new HospitalException(HospitalErrorCode.APPOINTMENT_SLOT_NOT_FOUND));
 
@@ -34,7 +35,7 @@ public class AppointmentService {
         Patient patient = patientRepository.findById(patientId).orElseThrow(
                 () -> new UserException(UserErrorCode.USER_NOT_FOUND));
 
-        Appointment appointment = Appointment.create(patient, slot, symptom, picture);
+        Appointment appointment = Appointment.create(patient, slot, symptom, picture, callType);
 
         appointmentRepository.save(appointment);
         slot.markAsBooked();

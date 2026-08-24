@@ -32,4 +32,12 @@ public class Treatment extends BaseEntity {
     private MedicalSubject medicalSubject;
 
     private String content;
+
+    public static Treatment create(Appointment appointment, MedicalSubject medicalSubject, String content) {
+        return Treatment.builder()
+                .appointment(appointment)
+                .medicalSubject(medicalSubject)
+                .content(content)
+                .build();
+    }
 }

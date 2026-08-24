@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import medisync.domain.appointment.entity.enums.CallType;
 
 @Getter
 @AllArgsConstructor
@@ -17,4 +18,7 @@ public class AppointmentCreateRequest {
     private String symptom;
 
     private String picture;
+
+    @NotNull
+    private CallType callType;
 }
