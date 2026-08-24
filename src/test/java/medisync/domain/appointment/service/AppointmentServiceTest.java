@@ -3,6 +3,7 @@ package medisync.domain.appointment.service;
 import common.BaseServiceTest;
 import medisync.domain.appointment.dto.AppointmentCreateResponse;
 import medisync.domain.appointment.entity.Appointment;
+import medisync.domain.appointment.entity.enums.CallType;
 import medisync.domain.appointment.repository.AppointmentRepository;
 import medisync.domain.hospital.entity.AppointmentSlot;
 import medisync.domain.hospital.exception.HospitalErrorCode;
@@ -44,6 +45,7 @@ public class AppointmentServiceTest extends BaseServiceTest {
         Long patientId = 1L;
         String symptom = "";
         String picture = "";
+        CallType callType = CallType.VOICE;
         AppointmentSlot appointmentSlot = AppointmentSlot.builder()
                 .build();
         Patient patient = Patient.builder().build();
@@ -59,7 +61,7 @@ public class AppointmentServiceTest extends BaseServiceTest {
         });
 
         // when
-        AppointmentCreateResponse response = appointmentService.createAppointment(slotId, patientId, symptom, picture);
+        AppointmentCreateResponse response = appointmentService.createAppointment(slotId, patientId, symptom, picture, callType);
 
         // then
         assertEquals(1, response.getId());
@@ -72,12 +74,13 @@ public class AppointmentServiceTest extends BaseServiceTest {
         Long patientId = 1L;
         String symptom = "";
         String picture = "";
+        CallType callType = CallType.VOICE;
 
         when(appointmentSlotRepository.findByIdForUpdate(slotId)).thenReturn(Optional.empty());
 
         // when
         HospitalException exception = assertThrows(HospitalException.class,
-                () -> appointmentService.createAppointment(slotId, patientId, symptom, picture));
+                () -> appointmentService.createAppointment(slotId, patientId, symptom, picture, callType));
 
         // then
         assertEquals(HospitalErrorCode.APPOINTMENT_SLOT_NOT_FOUND, exception.getHospitalErrorCode());
@@ -90,6 +93,7 @@ public class AppointmentServiceTest extends BaseServiceTest {
         Long patientId = 1L;
         String symptom = "";
         String picture = "";
+        CallType callType = CallType.VOICE;
         AppointmentSlot appointmentSlot = AppointmentSlot.builder().isAvailable(false).build();
         ReflectionTestUtils.setField(appointmentSlot, "id", 1L);
 
@@ -97,7 +101,7 @@ public class AppointmentServiceTest extends BaseServiceTest {
 
         // when
         HospitalException exception = assertThrows(HospitalException.class,
-                () -> appointmentService.createAppointment(slotId, patientId, symptom, picture));
+                () -> appointmentService.createAppointment(slotId, patientId, symptom, picture, callType));
 
         // then
         assertEquals(HospitalErrorCode.APPOINTMENT_SLOT_ALREADY_BOOKED, exception.getHospitalErrorCode());
@@ -110,6 +114,7 @@ public class AppointmentServiceTest extends BaseServiceTest {
         Long patientId = 1L;
         String symptom = "";
         String picture = "";
+        CallType callType = CallType.VOICE;
         AppointmentSlot appointmentSlot = AppointmentSlot.builder().build();
         ReflectionTestUtils.setField(appointmentSlot, "id", 1L);
 
@@ -118,7 +123,7 @@ public class AppointmentServiceTest extends BaseServiceTest {
 
         // when
         UserException exception = assertThrows(UserException.class,
-                () -> appointmentService.createAppointment(slotId, patientId, symptom, picture));
+                () -> appointmentService.createAppointment(slotId, patientId, symptom, picture, callType));
 
         // then
         assertEquals(UserErrorCode.USER_NOT_FOUND, exception.getUserErrorCode());

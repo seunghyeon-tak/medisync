@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import medisync.common.entity.BaseEntity;
+import medisync.domain.appointment.entity.enums.CallType;
 import medisync.domain.appointment.entity.enums.ReservationStatus;
 import medisync.domain.hospital.entity.AppointmentSlot;
 import medisync.domain.user.entity.Doctor;
@@ -38,6 +39,11 @@ public class Appointment extends BaseEntity {
     @JoinColumn(name = "slot_id", nullable = false)
     private AppointmentSlot appointmentSlot;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "call_type", length = 20)
+    @Builder.Default
+    private CallType callType = CallType.VOICE;
+
     /** 증상 */
     private String symptom;
 
@@ -48,13 +54,18 @@ public class Appointment extends BaseEntity {
     @Builder.Default
     private ReservationStatus reservationStatus = ReservationStatus.WAITING;
 
-    public static Appointment create(Patient patient, AppointmentSlot slot, String symptom, String picture) {
+    public static Appointment create(Patient patient, AppointmentSlot slot, String symptom, String picture, CallType callType) {
         return Appointment.builder()
                 .doctor(slot.getDoctor())
                 .patient(patient)
                 .appointmentSlot(slot)
                 .symptom(symptom)
                 .picture(picture)
+                .callType(callType)
                 .build();
+    }
+
+    public void reservationStatusComplete() {
+        this.reservationStatus = ReservationStatus.COMPLETE;
     }
 }
