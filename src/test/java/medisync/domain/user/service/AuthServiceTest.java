@@ -141,6 +141,7 @@ public class AuthServiceTest extends BaseServiceTest {
         ReflectionTestUtils.setField(user, "id", 1L);
 
         when(jwtProvider.getSubject(refreshToken)).thenReturn(String.valueOf(user.getId()));
+        when(jwtProvider.getTokenType(refreshToken)).thenReturn("refresh");
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get("refresh:" + user.getId())).thenReturn(refreshToken);
 
@@ -157,6 +158,7 @@ public class AuthServiceTest extends BaseServiceTest {
         String refreshToken = "refresh-token";
 
         when(jwtProvider.getSubject(refreshToken)).thenReturn("1");
+        when(jwtProvider.getTokenType(refreshToken)).thenReturn("refresh");
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get("refresh:1")).thenReturn(null);
 
@@ -175,6 +177,7 @@ public class AuthServiceTest extends BaseServiceTest {
         String refreshToken = "refresh-token";
 
         when(jwtProvider.getSubject(refreshToken)).thenReturn("1");
+        when(jwtProvider.getTokenType(refreshToken)).thenReturn("refresh");
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get("refresh:1")).thenReturn("different-token");
 
@@ -207,5 +210,21 @@ public class AuthServiceTest extends BaseServiceTest {
                 eq(TimeUnit.MILLISECONDS)
         );
         verify(redisTemplate).delete("refresh:1");
+    }
+
+    @Test
+    void 리프레쉬토큰_타입이_access면_실패() {
+        // given
+        String refreshToken = "refresh-token";
+
+        when(jwtProvider.getTokenType(refreshToken)).thenReturn("access");
+
+        // when
+        UserException exception = assertThrows(
+                UserException.class,
+                () -> authService.validateRefreshToken(refreshToken));
+
+        // then
+        assertEquals(UserErrorCode.INVALID_REFRESH_TOKEN, exception.getUserErrorCode());
     }
 }
