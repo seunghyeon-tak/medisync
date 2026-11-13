@@ -28,7 +28,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         // 토큰 검증
-        if (token != null && jwtProvider.validateToken(token)) {
+        if (token != null && jwtProvider.validateToken(token) && "access".equals(jwtProvider.getTokenType(token))) {
             // 블랙리스트 확인
             if (redisTemplate.hasKey("blacklist:" + token)) {
                 filterChain.doFilter(request, response);

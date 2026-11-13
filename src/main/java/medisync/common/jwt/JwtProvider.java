@@ -30,6 +30,7 @@ public class JwtProvider {  // 토큰 생성, 검증
     public String generateAccessToken(String subject) {
         return Jwts.builder()
                 .subject(subject)
+                .claim("type", "access")
                 .issuedAt(new Date())  // 발급 시간
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpiration))  // 만료 시간
                 .signWith(getSigningKey())
@@ -40,6 +41,7 @@ public class JwtProvider {  // 토큰 생성, 검증
     public String generateRefreshToken(String subject) {
         return Jwts.builder()
                 .subject(subject)
+                .claim("type", "refresh")
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .signWith(getSigningKey())
@@ -80,6 +82,15 @@ public class JwtProvider {  // 토큰 생성, 검증
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    public String getTokenType(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("type", String.class);
     }
 
     // token 만료시간 계산

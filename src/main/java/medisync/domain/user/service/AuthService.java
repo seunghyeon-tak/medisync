@@ -59,6 +59,11 @@ public class AuthService {
     }
 
     public Long validateRefreshToken(String refreshToken) {
+        // 보낸 토큰이 refresh 타입인지 먼저 확인
+        if (!"refresh".equals(jwtProvider.getTokenType(refreshToken))) {
+            throw new UserException(UserErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
         // refreshToken에서 userId 추출
         String userId = jwtProvider.getSubject(refreshToken);
 
